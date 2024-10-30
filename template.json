@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Salih Yýldýz",
+  "classifications": [ "Web", "ASP.NET Core" ],
+  "identity": "S.Y.BaseProject.identity",
+  "name": "N Katmanlý Mimari Þablonu .net8",
+  "shortName": "projesablon",
+  "tags": {
+    "language": "C#",
+    "type": "project"
+  },
+  "sourceName": "BaseProject",
+  "preferNameDirectory": true
+}
