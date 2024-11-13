@@ -1,0 +1,64 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="box box-default">
+    <div class="box-header with-border">
+        <h4 class="box-title">Yeni Kullanıcı Ekleme</h4>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body wizard-content">
+        <form asp-action="Add" class="tab-wizard wizard-circle" enctype="multipart/form-data">
+            <section>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="firstName5">Ad :</label>
+                            <input type="text" class="form-control" name="Name" id="firstName5" placeholder="Ad" required>
+                            <input type="hidden" class="form-control" name="DepartmentId" id="firstName5" value="1">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="firstName5">Soyad :</label>
+                            <input type="text" class="form-control" name="Surname" id="firstName5" placeholder="Soyad" required>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="firstName5">Temsilci Kodu :</label>
+                            <input type="text" class="form-control" name="RepresentationCode" id="firstName5" placeholder="Temsilci Kodu" required>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="firstName5">Email :</label>
+                            <input type="email" class="form-control" name="Email" id="firstName5" placeholder="Email" required>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="firstName5">Şifre :</label>
+                            <input type="text" class="form-control" name="Password" id="firstName5" placeholder="Şifre" required>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="firstName5">UserName :</label>
+                            <input type="text" class="form-control" name="UserName" id="firstName5" placeholder="UserName" required>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Kaydet</button>
+            </section>
+        </form>
+    </div>
+    <!-- /.box-body -->
+</div>
+

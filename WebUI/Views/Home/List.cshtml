@@ -1,0 +1,77 @@
+﻿@using WebUI.Dtos.MeetingDtos
+@model List<ResultMeetingDto>
+
+@{
+    ViewData["Title"] = "List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int s = 0;
+}
+
+<div class="row">
+
+
+    <div class="col-12">
+        <div class="box">
+            <div class="box-header with-border">
+                <h3 class="box-title">
+                    Müşteri Ziyaretleri Listesi
+                </h3>
+                <a asp-controller="Home" asp-action="Create" asp-route-name="@ViewBag.Name" class="btn btn-success btn-xs">@ViewBag.Name</a>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                <div class="table-responsive">
+                    <table id="example" class="display" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Tarih</th>
+                                <th>Unvan</th>
+                                <th>Başlık</th>
+                                <th>Tahsitlat</th>
+                                <th>Ödeme Türü</th>
+                                <th>Detay</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                s++;
+                                <tr>
+                                    <td>@s</td>
+                                    <td>@item.CreateDate.ToString("dd/MM/yyyy HH:ss")</td>
+                                    <td>
+                                        <a asp-controller="Home" asp-action="Update" asp-route-id="@item.ID" class="btn btn-success btn-xs">@item.VisitedCompany</a>
+                                    </td>
+                                    <td>@item.Title</td>
+                                    <td>@item.CollectionTotal @(item.Currency == "TL" ? "₺" : (item.Currency == "USD" ? "$" : (item.Currency == "EURO" ? "€" : "")))</td>
+                                    <td>@(item.CollectionType == "Seçiniz" ? "" : item.CollectionType)</td>
+                                    <td>
+                                        <a asp-controller="Home" asp-action="Detail" asp-route-id="@item.ID" class="btn btn-primary btn-xs">Detay</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>#</th>
+                                <th>Tarih</th>
+                                <th>Unvan</th>
+                                <th>Başlık</th>
+                                <th>Tahsitlat</th>
+                                <th>Ödeme Türü</th>
+                                <th>Detay</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+            <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+    </div>
+
+
+</div>
+
+

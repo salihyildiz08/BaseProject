@@ -1,0 +1,444 @@
+﻿﻿@using System.Security.Claims
+@using Newtonsoft.Json
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="~/favico.png">
+
+    <title>Dilek Halı İş Takip</title>
+
+    <!-- Bootstrap 4.0-->
+    <link rel="stylesheet" href="~/layout/assets/vendor_components/bootstrap/dist/css/bootstrap.css">
+
+    <!-- Bootstrap extend-->
+    <link rel="stylesheet" href="~/layout/layout/css/bootstrap-extend.css">
+
+    <!-- theme style -->
+    <link rel="stylesheet" href="~/layout/layout/css/master_style.css">
+
+    <!-- SoftMaterial admin skins -->
+    <link rel="stylesheet" href="~/layout/layout/css/skins/_all-skins.css">
+
+
+    <!-- Morris charts -->
+    <link rel="stylesheet" href="~/layout/assets/vendor_components/morris.js/morris.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.1.7/css/dataTables.dataTables.css">
+
+
+</head>
+
+<body class="hold-transition skin-red sidebar-mini">
+    <div class="wrapper">
+
+
+        <header class="main-header">
+            <!-- Logo -->
+            <a href="/" class="logo">
+                <!-- mini logo -->
+                <!-- logo-->
+                <span class="logo-lg">
+
+                    <img src="~/logodilek.png" alt="logo" class="light-logo">
+                    <img src="~/logodilek.png" alt="logo" class="dark-logo">
+                </span>
+            </a>
+            <!-- Header Navbar -->
+            <nav class="navbar navbar-static-top">
+
+                <!-- Sidebar toggle button-->
+                <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+                    <span class="sr-only">Toggle navigation</span>
+                </a>
+
+                <div class="navbar-custom-menu">
+                    <ul class="nav navbar-nav">
+
+                       @*  @await Component.InvokeAsync("_ResultNotificationPartialComponent") *@
+
+                        <!-- User Account-->
+                        <li class="dropdown user user-menu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <img src="~/usersr.png" class="user-image rounded-circle" alt="User Image">
+                            </a>
+                            <ul class="dropdown-menu scale-up">
+                                <!-- User image -->
+                                <li class="user-header">
+                                    <img src="~/usersr.png" class="float-left rounded-circle" alt="User Image">
+
+                                    <span>
+                                        @if (User.Identity.IsAuthenticated)
+                                        {
+                                            <p>Hoş Geldiniz, @ViewContext.HttpContext.Items["Name"] @ViewContext.HttpContext.Items["Surname"]</p>
+                                        }
+                                        else
+                                        {
+                                            <p>Hoş Geldiniz, Guest!</p>
+                                        }
+                                    </span>
+                                </li>
+                                <!-- Menu Body -->
+
+                            </ul>
+                        </li>
+                        <!-- Control Sidebar Toggle Button -->
+                        <li>
+                            <a href="#" data-toggle="control-sidebar"><i class="fa fa-cog fa-spin"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+
+        <!-- Left side column. contains the logo and sidebar -->
+        <aside class="main-sidebar">
+            <!-- sidebar-->
+            <section class="sidebar">
+                @{
+                    var rolesCookie = Context.Request.Cookies["Roles"];
+                    var roles = rolesCookie != null ? JsonConvert.DeserializeObject<List<string>>(rolesCookie) : new List<string>();
+                }
+
+                <!-- sidebar menu-->
+                <ul class="sidebar-menu" data-widget="tree">
+                    <li class="user-profile treeview">
+                        <a href="~/Layout/#">
+                            <img src="~/usersr.png" alt="user">
+                            <span>
+                                @if (ViewContext.HttpContext.Items["Name"] != null)
+                                {
+                                    <p>Hoş Geldiniz, @ViewContext.HttpContext.Items["Name"] @ViewContext.HttpContext.Items["Surname"]</p>
+                                }
+                                else
+                                {
+                                    <p>Hoş Geldiniz, Guest!</p>
+                                }
+                            </span>
+
+                        </a>
+                    </li>
+                    <li class="header nav-small-cap">PERSONAL</li>
+                    <li class="">
+                        <a href="/Home/Index">
+                            <i class="fa fa-home"></i> <span>Müşterilerim</span>
+
+                        </a>
+                    </li>
+                     <li class="">
+                        <a href="/Home/Gorusmelerim">
+                            <i class="fa fa-home"></i> <span>Müşteri Ziyaretlerim</span>
+
+                        </a>
+                    </li>
+                    <li><a href="/user/ChangeMyPassword"><i class="fa fa-key"></i>Şifremi Değiştir</a></li>
+                  
+                    @if (roles.Contains("Admin"))
+                    {
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-user"></i>
+                                <span>Kullanıcı İşlemleri</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-right pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href="/user"><i class="fa fa-users"></i>Kullanıcılar</a></li>
+                                <li><a href="/register"><i class="fa fa-user-plus"></i>Kullanıcı Ekle</a></li>
+                            </ul>
+                        </li>
+                    }
+                    <li><a href="/Login/Logout"><i class="fa fa-power-off mr-5"></i>Çıkış Yap</a></li>
+                </ul>
+            </section>
+        </aside>
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            @*  <section class="content-header">
+            <h1>
+            Dashboard
+            <small>Control panel</small>
+            </h1>
+            <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li class="breadcrumb-item active">Dashboard</li>
+            </ol>
+            </section> *@
+
+            <!-- Main content -->
+            <section class="content">
+
+                @RenderBody()
+
+            </section>
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+        <footer class="main-footer">
+            <div class="pull-right d-none d-sm-inline-block">
+            </div>
+            &copy; 2024 All Rights Reserved.
+        </footer>
+
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-light">
+            <!-- Create the tabs -->
+            <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
+                <li class="nav-item"><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
+                <li class="nav-item"><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-cog fa-spin"></i></a></li>
+            </ul>
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <!-- Home tab content -->
+                <div class="tab-pane" id="control-sidebar-home-tab">
+                    <h3 class="control-sidebar-heading">Recent Activity</h3>
+                    <ul class="control-sidebar-menu">
+                        <li>
+                            <a href="javascript:void(0)">
+                                <i class="menu-icon fa fa-birthday-cake bg-danger"></i>
+
+                                <div class="menu-info">
+                                    <h4 class="control-sidebar-subheading">Admin Birthday</h4>
+
+                                    <p>Will be July 24th</p>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)">
+                                <i class="menu-icon fa fa-user bg-warning"></i>
+
+                                <div class="menu-info">
+                                    <h4 class="control-sidebar-subheading">Jhone Updated His Profile</h4>
+
+                                    <p>New Email : jhone_doe@demo.com</p>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)">
+                                <i class="menu-icon fa fa-envelope-o bg-info"></i>
+
+                                <div class="menu-info">
+                                    <h4 class="control-sidebar-subheading">Disha Joined Mailing List</h4>
+
+                                    <p>disha@demo.com</p>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)">
+                                <i class="menu-icon fa fa-file-code-o bg-success"></i>
+
+                                <div class="menu-info">
+                                    <h4 class="control-sidebar-subheading">Code Change</h4>
+
+                                    <p>Execution time 15 Days</p>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- /.control-sidebar-menu -->
+
+                    <h3 class="control-sidebar-heading">Tasks Progress</h3>
+                    <ul class="control-sidebar-menu">
+                        <li>
+                            <a href="javascript:void(0)">
+                                <h4 class="control-sidebar-subheading">
+                                    Web Design
+                                    <span class="label label-danger pull-right">40%</span>
+                                </h4>
+
+                                <div class="progress progress-xxs">
+                                    <div class="progress-bar progress-bar-danger" style="width: 40%"></div>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)">
+                                <h4 class="control-sidebar-subheading">
+                                    Update Data
+                                    <span class="label label-success pull-right">75%</span>
+                                </h4>
+
+                                <div class="progress progress-xxs">
+                                    <div class="progress-bar progress-bar-success" style="width: 75%"></div>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)">
+                                <h4 class="control-sidebar-subheading">
+                                    Order Process
+                                    <span class="label label-warning pull-right">89%</span>
+                                </h4>
+
+                                <div class="progress progress-xxs">
+                                    <div class="progress-bar progress-bar-warning" style="width: 89%"></div>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)">
+                                <h4 class="control-sidebar-subheading">
+                                    Development
+                                    <span class="label label-primary pull-right">72%</span>
+                                </h4>
+
+                                <div class="progress progress-xxs">
+                                    <div class="progress-bar progress-bar-primary" style="width: 72%"></div>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- /.control-sidebar-menu -->
+
+                </div>
+                <!-- /.tab-pane -->
+                <!-- Stats tab content -->
+                <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div>
+                <!-- /.tab-pane -->
+                <!-- Settings tab content -->
+                <div class="tab-pane" id="control-sidebar-settings-tab">
+                    <form method="post">
+                        <h3 class="control-sidebar-heading">General Settings</h3>
+
+                        <div class="form-group">
+                            <input type="checkbox" id="report_panel" class="chk-col-grey">
+                            <label for="report_panel" class="control-sidebar-subheading ">Report panel usage</label>
+
+                            <p>
+                                general settings information
+                            </p>
+                        </div>
+                        <!-- /.form-group -->
+
+                        <div class="form-group">
+                            <input type="checkbox" id="allow_mail" class="chk-col-grey">
+                            <label for="allow_mail" class="control-sidebar-subheading ">Mail redirect</label>
+
+                            <p>
+                                Other sets of options are available
+                            </p>
+                        </div>
+                        <!-- /.form-group -->
+
+                        <div class="form-group">
+                            <input type="checkbox" id="expose_author" class="chk-col-grey">
+                            <label for="expose_author" class="control-sidebar-subheading ">Expose author name</label>
+
+                            <p>
+                                Allow the user to show his name in blog posts
+                            </p>
+                        </div>
+                        <!-- /.form-group -->
+
+                        <h3 class="control-sidebar-heading">Chat Settings</h3>
+
+                        <div class="form-group">
+                            <input type="checkbox" id="show_me_online" class="chk-col-grey">
+                            <label for="show_me_online" class="control-sidebar-subheading ">Show me as online</label>
+                        </div>
+                        <!-- /.form-group -->
+
+                        <div class="form-group">
+                            <input type="checkbox" id="off_notifications" class="chk-col-grey">
+                            <label for="off_notifications" class="control-sidebar-subheading ">Turn off notifications</label>
+                        </div>
+                        <!-- /.form-group -->
+
+                        <div class="form-group">
+                            <label class="control-sidebar-subheading">
+                                <a href="javascript:void(0)" class="text-red margin-r-5"><i class="fa fa-trash-o"></i></a>
+                                Delete chat history
+                            </label>
+                        </div>
+                        <!-- /.form-group -->
+                    </form>
+                </div>
+                <!-- /.tab-pane -->
+            </div>
+        </aside>
+        <!-- /.control-sidebar -->
+        <!-- Add the sidebar's background. This div must be placed immediately after the control sidebar -->
+        <div class="control-sidebar-bg"></div>
+
+    </div>
+    <!-- ./wrapper -->
+    <!-- jQuery 3 -->
+    <script src="~/layout/assets/vendor_components/jquery-3.3.1/jquery-3.3.1.js"></script>
+
+    <!-- popper -->
+    <script src="~/layout/assets/vendor_components/popper/dist/popper.min.js"></script>
+
+    <!-- Bootstrap 4.0-->
+    <script src="~/layout/assets/vendor_components/bootstrap/dist/js/bootstrap.js"></script>
+
+    <!-- Slimscroll -->
+    <script src="~/layout/assets/vendor_components/jquery-slimscroll/jquery.slimscroll.js"></script>
+
+    <!-- FastClick -->
+    <script src="~/layout/assets/vendor_components/fastclick/lib/fastclick.js"></script>
+
+    <!-- Morris.js charts -->
+    <script src="~/layout/assets/vendor_components/raphael/raphael.min.js"></script>
+    <script src="~/layout/assets/vendor_components/morris.js/morris.min.js"></script>
+
+    <!-- SoftMaterial admin App -->
+    <script src="~/layout/layout/js/template.js"></script>
+
+    <!-- SoftMaterial admin dashboard demo (This is only for demo purposes) -->
+    <script src="~/layout/layout/js/pages/dashboard.js"></script>
+
+    <!-- SoftMaterial admin for demo purposes -->
+    <script src="~/layout/layout/js/demo.js"></script>
+
+
+
+    <script src="https://cdn.datatables.net/2.1.7/js/dataTables.js"></script>
+    <script>
+        $(document).ready(function () {
+            // DataTable'i başlatma
+            $('#example').DataTable({
+                order: [[0, 'desc']], // Varsayılan olarak sıralanacak sütun
+                initComplete: function () {
+                    // DataTable başlıklarının üstüne arama kutuları ekleyelim
+                    this.api()
+                        .columns()
+                        .every(function () {
+                            let column = this;
+                            let title = $(column.header()).text(); // Başlığı al
+
+                            // Arama kutusu oluştur
+                            let input = document.createElement('input');
+                            input.placeholder = `Ara: ${title}`;
+                            $(input).css('width', '100%'); // Genişliği ayarla
+
+                            // Arama kutusunu başlığın altına eklemek yerine üstüne ekle
+                            $(column.header()).append($(input));
+
+                            // Kullanıcı inputu için olay dinleyicisi
+                            $(input).on('keyup change', function () {
+                                if (column.search() !== this.value) {
+                                    column.search(this.value).draw();
+                                }
+                            });
+                        });
+                }
+            });
+        });
+    </script>
+
+
+</body>
+</html>

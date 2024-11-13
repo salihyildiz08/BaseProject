@@ -1,0 +1,65 @@
+﻿@using WebUI.Dtos.UserDtos
+@model LoginDto
+@{
+    Layout = null;
+
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dilek Halı</title>
+    <link rel="icon" href="~/favico.png">
+    <link rel="stylesheet" type="text/css" href="~/login/envato/iofrm/html/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="~/login/envato/iofrm/html/css/fontawesome-all.min.css">
+    <link rel="stylesheet" type="text/css" href="~/login/envato/iofrm/html/css/iofrm-style.css">
+    <link rel="stylesheet" type="text/css" href="~/login/envato/iofrm/html/css/iofrm-theme33.css">
+</head>
+<body>
+    <div class="form-body">
+        <div class="iofrm-layout">
+            <div class="img-holder">
+                <div class="bg"></div>
+                <div class="info-holder">
+                    <img src="~/login/envato/iofrm/html/images/graphic10.svg" alt="">
+                </div>
+            </div>
+            <div class="form-holder">
+                <div class="form-content">
+                    <div class="form-items with-bg">
+                        <div class="">
+                            <a href="/login/login">
+                                <div class="logo">
+                                    <img src="~/logodilek.png" />
+                                </div>
+                            </a>
+                            <div asp-validation-summary="All" class="text-danger"></div>
+                        </div>
+                        <form asp-action="Index" method="post">
+
+                            <input asp-for="Email" class="form-control" placeholder="Email" required />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+
+                            <input asp-for="Password" class="form-control" placeholder="Şifre" type="password" required />
+                            <span asp-validation-for="Password" class="text-danger"></span>
+
+                            <div class="form-button d-flex">
+                                <button id="submit" class="btn btn-primary">Giriş Yap</button>
+                            </div>
+                        </form>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/login/envato/iofrm/html/js/jquery.min.js"></script>
+    <script src="~/login/envato/iofrm/html/js/popper.min.js"></script>
+    <script src="~/login/envato/iofrm/html/js/bootstrap.bundle.min.js"></script>
+    <script src="~/login/envato/iofrm/html/js/main.js"></script>
+</body>
+</html>

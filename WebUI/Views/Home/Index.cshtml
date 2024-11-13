@@ -1,0 +1,77 @@
+﻿@using WebUI.Dtos.CustomerDtos
+@model List<BalanceDto>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int s = 0;
+}
+
+<div class="row">
+
+
+    <div class="col-12">
+        <div class="box">
+            <div class="box-header with-border">
+                <h3 class="box-title">
+                    Müşteri Listesi
+                </h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                <div class="table-responsive">
+                    <table id="example" class="display" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Unvan</th>
+                                <th>Sehir</th>
+                                <th>Ulke</th>
+                                <th>Satis Bölgesi</th>
+                                <th>Borç Tutarı</th>
+                                <th>Alacak Tutarı</th>
+                                <th>Döviz</th>
+                                <th>Vade</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                s++;
+                                <tr>
+                                    <td>@s</td>
+                                    <td>
+                                        <a asp-controller="Home" asp-action="List" asp-route-name="@item.Unvan" class="btn btn-success btn-xs">@item.Unvan</a>
+                                    </td>
+                                    <td>@item.Sehir</td>
+                                    <td>@item.Ulke</td>
+                                    <td>@item.SatisBölgesi</td>
+                                    <td>@String.Format("{0:N4}", @item.BorcBakiye)</td>
+                                    <td>@String.Format("{0:N4}", @item.AlacakBakiye)</td>
+                                    <td>@item.calisilan_doviz_turu</td>
+                                    <td></td>
+                                </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>#</th>
+                                <th>Unvan</th>
+                                <th>Sehir</th>
+                                <th>Ulke</th>
+                                <th>Satis Bölgesi</th>
+                                <th>Borç Tutarı</th>
+                                <th>Alacak Tutarı</th>
+                                <th>Döviz</th>
+                                <th>Vade</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+            <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+    </div>
+
+
+</div>

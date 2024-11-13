@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using DtoLayer.UserDto;
 using EntityLayer.Concrete;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -70,5 +71,31 @@ namespace WebApi.Controllers
             var userDto = _mapper.Map<ResultUserDto>(user);
             return Ok(userDto);
         }
+
+        [HttpPost("changepassword")]
+        public async Task<IActionResult> ChangePassword(ChangePasswordDto model)
+        {
+            var user = await _userManager.FindByIdAsync(model.UserId);
+            if (user == null)
+            {
+                return NotFound("User not found.");
+            }
+
+            var removePasswordResult = await _userManager.RemovePasswordAsync(user);
+            if (!removePasswordResult.Succeeded)
+            {
+                return BadRequest(removePasswordResult.Errors);
+            }
+
+            var addPasswordResult = await _userManager.AddPasswordAsync(user, model.NewPassword);
+            if (addPasswordResult.Succeeded)
+            {
+                return Ok();
+            }
+
+            return BadRequest(addPasswordResult.Errors);
+        }
+
+
     }
 }

@@ -1,0 +1,103 @@
+﻿﻿@using WebUI.Dtos.UserDtos
+@model List<ResultUserDto>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+
+
+    <div class="col-12">
+        <div class="box">
+            <div class="box-header with-border">
+                <h3 class="box-title">
+                    Kullanıcı Listesi
+                </h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                <div class="table-responsive">
+                    <table id="example" class="table table-bordered table-striped" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var user in Model)
+                            {
+                                <tr>
+                                    <td>@user.Name @user.Surname</td>
+                                    <td>@user.Email</td>
+                                    <td>
+                                        <button class="btn btn-primary" onclick="showChangePasswordModal('@user.ID')">Change Password</button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Actions</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+
+                <div class="row">
+
+                    <div class="col-lg-4 col-4">
+                        <div id="changePasswordModal" class="modal" style="margin:10%">
+                            <div class="modal-content">
+                                <span class="close" onclick="closeChangePasswordModal()">&times;</span>
+                                <h2>Change Password</h2>
+                                <form id="changePasswordForm" method="post" asp-action="ChangePassword" style="margin: 3%;">
+                                    <input type="hidden" id="changePasswordUserId" name="UserId" />
+
+                                    <div class="form-group">
+                                        <label for="newPassword">Yeni Şifre</label>
+                                        <input type="password" id="newPassword" name="NewPassword" class="form-control" required />
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Change Password</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+    </div>
+
+
+</div>
+
+
+
+
+<script>
+    function showChangePasswordModal(userId) {
+        document.getElementById('changePasswordUserId').value = userId;
+        document.getElementById('changePasswordModal').style.display = 'block';
+    }
+
+    function closeChangePasswordModal() {
+        document.getElementById('changePasswordModal').style.display = 'none';
+    }
+
+    function showChangeDepartmentModal(userId) {
+        document.getElementById('changeDepartmentUserId').value = userId;
+        document.getElementById('changeDepartmentModal').style.display = 'block';
+    }
+
+    function closeChangeDepartmentModal() {
+        document.getElementById('changeDepartmentModal').style.display = 'none';
+    }
+</script>
+

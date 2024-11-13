@@ -1,0 +1,106 @@
+﻿@using WebUI.Dtos.MeetingDtos
+@model ResultMeetingDto
+
+@{
+    ViewData["Title"] = "Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="box box-default">
+    <div class="box-header with-border">
+        <h4 class="box-title">Ziyaret Detayı  - @Model.VisitedCompany</h4>
+        <br /><br />
+        <h6>Tarih : @Model.CreateDate.ToString("dd/MM/yyyy")</h6>
+        <br />
+        <h6>Temsilci Adı Soyadı : @Model.CreateUserName</h6>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body wizard-content">
+        <section>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="firstName5">Ziyaret Konusu :</label>
+                        <input type="text" class="form-control" name="Title" id="firstName5" value="@Model.Title" readonly>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="firstName5">Ziyaret Edilen Firma :</label>
+                        <input type="text" class="form-control" name="VisitedCompany" id="firstName5" value="@Model.VisitedCompany" readonly>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="firstName5">Ziyaret Detayı :</label>
+                        <textarea id="Description" class="form-control" name="Description" readonly>@Model.Description</textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="firstName5">Firma Talepleri :</label>
+                        <textarea id="CompanyDemands" class="form-control" name="CompanyDemands" readonly>@Model.CompanyDemands</textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="firstName5">Tahsilat Yapıldı Mı :</label>
+                        <input type="text" class="form-control" name="CompanyDemands" id="CompanyDemands" value="@Model.IsCollection" readonly>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="firstName5">Döviz :</label>
+                        <input type="text" class="form-control" name="CompanyDemands" id="CompanyDemands" value="@Model.Currency" readonly>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="firstName5">Tahsilat Tutarı :</label>
+                        <input type="text" class="form-control" name="CollectionTotal" id="firstName5" value="@Model.CollectionTotal" readonly>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="firstName5">Tahsilat Türü :</label>
+                        <input type="text" class="form-control" name="CompanyDemands" id="CompanyDemands" value="@Model.CollectionType" readonly>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+    <!-- /.box-body -->
+</div>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var textarea = document.getElementById('Description');
+        textarea.style.height = 'auto';
+        textarea.style.height = (textarea.scrollHeight) + 'px';
+
+        textarea.addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = (this.scrollHeight) + 'px';
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var textarea = document.getElementById('CompanyDemands');
+        textarea.style.height = 'auto';
+        textarea.style.height = (textarea.scrollHeight) + 'px';
+
+        textarea.addEventListener('input', function () {
+            this.style.height = 'auto';
+            this.style.height = (this.scrollHeight) + 'px';
+        });
+    });
+</script>
+

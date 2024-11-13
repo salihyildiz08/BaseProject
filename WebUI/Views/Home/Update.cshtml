@@ -1,0 +1,95 @@
+﻿@using WebUI.Dtos.MeetingDtos
+@model ResultMeetingDto
+@{
+    ViewData["Title"] = "Update";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="box box-default">
+    <div class="box-header with-border">
+        <h4 class="box-title">Ziyaret Güncelleme</h4>
+        <h4 class="btn btn-success">@Model.VisitedCompany</h4>
+
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body wizard-content">
+        <form asp-action="Update" class="tab-wizard wizard-circle" enctype="multipart/form-data">
+            <section>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="firstName5">Ziyaret Konusu :</label>
+                            <input type="text" class="form-control" name="Title" id="firstName5" value="@Model.Title" required>
+                            <input type="hidden" class="form-control" name="ID" id="firstName5" value="@Model.ID" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="firstName5">Ziyaret Edilen Firma :</label>
+                            <input type="text" class="form-control" name="VisitedCompany" id="firstName5" value="@Model.VisitedCompany" readonly>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="firstName5">Ziyaret Detayı :</label>
+                            <textarea id="Description" class="form-control" name="Description" required>@Model.Description</textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="firstName5">Firma Talepleri :</label>
+                            <input type="text" class="form-control" name="CompanyDemands" id="CompanyDemands" value="@Model.CompanyDemands">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="firstName5">Tahsilat Yapıldı Mı :</label>
+                            <select class="form-control" name="IsCollection">
+                                <option value="Hayır">Hayır</option>
+                                <option value="Evet" >Evet</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="firstName5">Döviz :</label>
+                            <select class="form-control" name="Currency">
+                                <option value="Seçiniz">Seçiniz</option>
+                                <option value="TL">TL</option>
+                                <option value="USD">USD</option>
+                                <option value="EURO">EURO</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="firstName5">Tahsilat Tutarı :</label>
+                            <input type="text" class="form-control" name="CollectionTotal" id="firstName5" value="@Model.CollectionTotal">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="firstName5">Tahsilat Türü :</label>
+                            <select class="form-control" name="CollectionType">
+                                <option value="Seçiniz" >Seçiniz</option>
+                                <option value="Havale">Havale</option>
+                                <option value="Kredi Kartı">Kredi Kartı</option>
+                                <option value="Nakit">Nakit</option>
+                                <option value="Çek">Çek</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Güncelle</button>
+            </section>
+        </form>
+
+    </div>
+    <!-- /.box-body -->
+</div>

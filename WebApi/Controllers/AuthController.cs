@@ -26,23 +26,12 @@ namespace WebApi.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginDto model)
         {
-            AppUser user = null;
-
-            if (model.EmailOrUserName.Contains("@"))
-            {
-                user = await _userManager.FindByEmailAsync(model.EmailOrUserName);
-            }
-            else
-            {
-                user = await _userManager.FindByNameAsync(model.EmailOrUserName);
-            }
-
+            var user = await _userManager.FindByEmailAsync(model.Email);
             if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
             {
                 var token = GenerateJwtToken(user);
                 return Ok(new { token });
             }
-
             return Unauthorized();
         }
 
@@ -56,7 +45,9 @@ namespace WebApi.Controllers
         new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
         new Claim(JwtRegisteredClaimNames.Email, user.Email),
         new Claim("name", user.Name),
-        new Claim("surname", user.Surname)
+        new Claim("surname", user.Surname),
+        new Claim("representationCode", user.RepresentationCode),
+        new Claim("departmentId", user.DepartmentId.ToString())
     };
 
             var roles = await _userManager.GetRolesAsync(user);
